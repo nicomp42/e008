@@ -1,6 +1,6 @@
 ﻿/*******************************************************************************************************
- * What is the sum of all integers greater than 10 and  less than 1000000 that are prime forward and backward?
- * 
+ * What is the sum of all integers greater than 10 and less than 100000000 that are prime forward and backward?
+ * 29239803893782
  */
 
 using System;
@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 namespace e008 {
     class e008 {
         static void Main(string[] args) {
-            long upperLimit = 1000000000;
+            long upperLimit = 100000000;
             Console.WriteLine("e008: " + (new e008()).Solve(upperLimit));
         }
         public long Solve(long upperLimit) {
@@ -20,16 +20,27 @@ namespace e008 {
             long reverseI;
             char[] myArray;
             String myString;
+            char firstDigit;
             for (long i = 11; i < upperLimit; i += 2) {
                 if ((i % 1000001) == 0) { Console.WriteLine(i); }
                 myString = Convert.ToString(i);
                 myArray = myString.ToCharArray();
-                Array.Reverse(myArray);
-                myString = new String(myArray);
-                reverseI = Convert.ToInt64(myString);
-                if (IsPrime(i) && IsPrime(reverseI)) {
-                    //Console.WriteLine(i + ":" + reverseI);
-                    result += i;
+                firstDigit = myArray[0];
+                if (firstDigit == '1' || firstDigit == '3' || firstDigit == '7' || firstDigit == '9') {
+                    Array.Reverse(myArray);
+                    myString = new String(myArray);
+                    reverseI = Convert.ToInt64(myString);
+                    if (IsPrime(i) && IsPrime(reverseI)) {
+                        //Console.WriteLine(i + ":" + reverseI);
+                        result += i;
+                    }
+                } else {
+                    // The number begins with {2,4,5,6,8} so skip ahead to the next number that doesn't
+                    Console.Write("i = " + i);
+                    myArray[0] += (char)1;
+                    for (int j = 1; j < myArray.Length - 1; j++) { myArray[j] = '0'; } myArray[myArray.Length - 1] = '1';
+                    i = Convert.ToInt64(new String(myArray));
+                    Console.WriteLine(", " + i);
                 }
             }
             return result;
@@ -65,8 +76,5 @@ namespace e008 {
             }
             return result;
         }
-
-
-
     }
 }
