@@ -23,12 +23,12 @@ namespace e008 {
             char[] myArray;
             String myString;
             char firstDigit;
-            result = 17;    // Our loop begins at 11, so add in 2+3+5+7 . 
+            //result = 17;    // Our loop begins at 11, so add in 2+3+5+7 . 
             for (long i = 11; i < upperLimit; i += 2) {
                 if ((i % 1000001) == 0) { Console.WriteLine(i); }
                 myString = Convert.ToString(i);
                 myArray = myString.ToCharArray();
-                firstDigit = myArray[0];
+                firstDigit = myArray[myArray.Length-1];
                 if (firstDigit == '1' || firstDigit == '3' || firstDigit == '7' || firstDigit == '9') {
                     Array.Reverse(myArray);
                     myString = new String(myArray);
